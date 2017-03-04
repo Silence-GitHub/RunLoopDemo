@@ -10,10 +10,26 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    weak var runLoopObserver: CFRunLoopObserver?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCome), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerCome), userInfo: nil, repeats: true)
+        
+        let observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault, CFRunLoopActivity.entry.rawValue, true, 0) { (observer, activity) in
+            print("Entry default mode")
+        }
+        CFRunLoopAddObserver(RunLoop.main.getCFRunLoop(), observer, CFRunLoopMode.defaultMode)
+        runLoopObserver = observer
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove", style: .plain, target: self, action: #selector(rightButtonClicked))
+    }
+    
+    func rightButtonClicked() {
+        if let observer = runLoopObserver {
+            CFRunLoopRemoveObserver(RunLoop.main.getCFRunLoop(), observer, CFRunLoopMode.defaultMode)
+        }
     }
     
     func timerCome() {
@@ -44,6 +60,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func sourceCome() {
         print(Date(), #function)
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print(#function)
     }
 
 }
