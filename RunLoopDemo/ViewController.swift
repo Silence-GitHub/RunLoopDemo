@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func timerCome() {
-        print(#function)
+        print(Date(), #function)
     }
 
     // MARK: - Table view data source
@@ -43,7 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func sourceCome() {
-        print(#function)
+        print(Date(), #function)
     }
 
 }
