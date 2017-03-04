@@ -61,10 +61,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func sourceCome() {
         print(Date(), #function)
     }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        print(#function)
-    }
 
 }
 
